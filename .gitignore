@@ -1,0 +1,15 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Python template
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*$py.class
+/.idea/*
+
+# folders
+*/userdata/*
+telegram_wrapper
+# files
+credentials*.json
+!credentials_example.json
+backlog.txt
+cookies.json
