@@ -5,11 +5,9 @@ __pycache__/
 *$py.class
 /.idea/*
 
-# folders
 */userdata/*
-telegram_wrapper
-# files
 credentials*
 !credentials_example.json
-backlog.txt
 cookies.json
+telegram_wrapper/workdata/*
+!credentials_example*
