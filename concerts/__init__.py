@@ -3,9 +3,9 @@ from .provider_seatscan import *
 from .provider import *
 
 import os
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+MODULE_PATH = os.path.dirname(os.path.abspath(__file__))
 def get_full_path(fname):
-    return os.path.join(PROJECT_ROOT, fname)
+    return os.path.join(MODULE_PATH, fname)
 
 
 folder = 'workdata/'

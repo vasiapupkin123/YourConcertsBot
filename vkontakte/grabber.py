@@ -3,6 +3,7 @@ import json
 import os
 import time
 
+from .utils import count_list_values
 from vkontakte.grabber_api_methods import VKAPIMethods
 from vkontakte.grabber_html_audio import VKAudioParser
 
@@ -112,3 +113,16 @@ class VKGrabber(VKAudioParser, VKAPIMethods):
             except:
                 pass
         return users_artists
+
+    def get_artists_popularity(self, target_person, top_len = 10):
+        # user_id -> [ ['artist#1',num_of_artist#1_tracks_in_target_id_audio], ... ], 'artist1-#1\nartist2-#2..'
+        target_id = self.get_user_id(target_person)
+        audios = self.get_audios(target_id)
+        if audios:
+            popularity = count_list_values([audio['artist'] for audio in audios])
+            if top_len:
+                text_popularity = '\n'.join([a[0]+' - '+str(a[1]) for a in popularity[:top_len]])
+            else:
+                text_popularity = None
+            return popularity, text_popularity
+        return None, None

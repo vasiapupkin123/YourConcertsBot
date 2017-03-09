@@ -119,25 +119,10 @@ class VKAudioParser(object):
             return None
 
     def get_artists(self, target_id):
-        # user_id -> {'artist1', 'artist2', ..}
+        # user_id -> ['artist1', 'artist2', ..]
         if not self.audio_parsing_available:
             return None
         audios = self.get_audios(target_id)
         if audios:
-            return set([audio['artist'] for audio in audios])
+            return [audio['artist'] for audio in audios]
         return None
-
-    def get_artists_popularity(self, target_id, top_len = 10):
-        # user_id -> [ ['artist#1',num_of_artist#1_tracks_in_target_id_audio], ... ]
-        # по-хорошему это надо считать вне класса с учётом словарика замен различных названий одной группы
-        if not self.audio_parsing_available:
-            return None
-        audios = self.get_audios(target_id)
-        if audios:
-            popularity = count_list_values([audio['artist'] for audio in audios])
-            if top_len:
-                text_popularity = '\n'.join([a[0]+' - '+str(a[1]) for a in popularity[:top_len]])
-            else:
-                text_popularity = None
-            return popularity, text_popularity
-        return None, None

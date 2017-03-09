@@ -1,16 +1,10 @@
 # coding: utf-8
-"""
-VK обладает отличным API, здесь тонкий буфер между ним и получателем информации
-"""
-import json
 import re
-
 import vk
 
 
 class VKAPIMethods(object):
     def __init__(self, credentials=None):
-        # логинимся по API token для получения доступа к API
         self.api = vk.API(vk.Session(access_token=credentials['app_token']))
         self._regex_id_from_string = re.compile(r'(https://)?(vk.com/)?((id(\d+))|(\w+))')
 
@@ -28,7 +22,6 @@ class VKAPIMethods(object):
                 return None
 
     def get_user_info(self, q):
-        # any_string_containing_username_or_id ->  {'last_name':'', 'first_name':'', 'uid':''}
         try:
             q = self._get_username_from_string(q)
             user = self.api.users.get(user_ids=q)[0]
@@ -37,7 +30,6 @@ class VKAPIMethods(object):
             return None
 
     def get_user_id(self, q):
-        # any_string_containing_username_or_id -> user_id
         username = self._get_username_from_string(q)
         if isinstance(username, int):
             return username
@@ -45,7 +37,15 @@ class VKAPIMethods(object):
             return self.get_user_info(username)['uid']
 
     def get_friends_id_list(self, q):
-        # any_string_containing_username_or_id -> [friend1_user_id, ..]
         uid = self.get_user_id(q)
         friends_id_list = self.api.friends.get(user_id=uid)
         return friends_id_list
+
+    def get_audio(self, q):
+        uid = self.get_user_id(q)
+        audios = self.api.audio.get(uid=uid)
+        return [{'artist': a['artist'], 'name': a['title']} for a in audios]
+
+    def get_artists(self, q):
+        audios = self.get_audio(q)
+        return [a['artist'] for a in audios]

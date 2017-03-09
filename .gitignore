@@ -9,7 +9,7 @@ __pycache__/
 */userdata/*
 telegram_wrapper
 # files
-credentials*.json
+credentials*
 !credentials_example.json
 backlog.txt
 cookies.json

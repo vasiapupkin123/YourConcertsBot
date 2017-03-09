@@ -5,7 +5,6 @@ import time
 
 import requests
 from .base import Concert
-from utils import multithread_it
 
 
 class SeatscanGrabber(object):
